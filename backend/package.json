@@ -1,0 +1,20 @@
+{
+  "name": "jira-backend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon index.js"
+  },
+  "type": "module",
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "apollo-server": "^3.13.0",
+    "apollo-server-express": "^3.13.0",
+    "graphql": "^16.8.1",
+    "knex": "^3.1.0",
+    "pg": "^8.11.3"
+  }
+}
