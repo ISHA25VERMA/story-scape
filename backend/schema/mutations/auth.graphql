@@ -1,0 +1,10 @@
+input CreateUserInput {
+  name: String!
+  email: String!
+  role: String!
+  orgId: Int!
+}
+
+type AuthMutation {
+  createNewUser(input: CreateUserInput): User!
+}

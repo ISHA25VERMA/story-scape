@@ -1,0 +1,23 @@
+type User {
+  id: Int!
+  name: Name!
+  email: String!
+}
+
+type Name {
+  firstName: String!
+  lastName: String
+}
+
+type Query {
+  user(id: ID): User!
+}
+
+enum USER_ROLE_ENUM {
+  ADMIN
+  USER
+}
+
+schema {
+  query: Query
+}

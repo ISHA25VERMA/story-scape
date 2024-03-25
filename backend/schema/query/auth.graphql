@@ -1,0 +1,22 @@
+type Organization {
+  id: ID!
+  name: String
+  email: String!
+}
+
+type User {
+  id: Int!
+  name: String!
+  email: String!
+  role: USER_ROLE_ENUM!
+  organization: Organization
+}
+
+type AuthQuery {
+  user(ids: [ID!]!): User!
+}
+
+enum USER_ROLE_ENUM {
+  ADMIN
+  USER
+}
