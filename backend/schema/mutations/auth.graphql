@@ -3,8 +3,16 @@ input CreateUserInput {
   email: String!
   role: String!
   orgId: Int!
+  password: String!
+}
+
+input RegisterOrgInput {
+  name: String!
+  email: String!
+  password: String!
 }
 
 type AuthMutation {
   createNewUser(input: CreateUserInput): User!
+  registerOrganization(input: RegisterOrgInput!): Organization
 }

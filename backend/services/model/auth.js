@@ -13,6 +13,7 @@ export const addNewUser = async (data) => {
     org_id: data.orgId,
     email: data.email,
     role: data.role,
+    password: data.password,
   };
   return await db("auth.users").insert(insertData).returning("*");
 };

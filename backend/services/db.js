@@ -6,5 +6,7 @@ const db = knex(config["development"]);
 
 export default db;
 
+//test commit
+
 //node, graphql, postgresql, knex -> backend
 //react -> frontend
