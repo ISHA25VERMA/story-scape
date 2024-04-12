@@ -6,8 +6,15 @@ export const getUsersByID = async (data) => {
   return res;
 };
 
+export const getUserByEmail = async (data) => {
+  const { email } = data;
+  const res = await db("auth.users")
+    .select("*")
+    .where("email", db.raw("?", email));
+  return res;
+};
+
 export const addNewUser = async (data) => {
-  console.log(data);
   const insertData = {
     name: data.name,
     org_id: data.orgId,

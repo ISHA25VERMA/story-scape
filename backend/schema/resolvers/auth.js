@@ -1,4 +1,8 @@
-import { fetchUserById, createUser } from "../../services/controller/auth.js";
+import {
+  fetchUserById,
+  createUser,
+  userLogin,
+} from "../../services/controller/auth.js";
 import GraphQLJSON from "graphql-type-json";
 
 export default {
@@ -13,8 +17,11 @@ export default {
     },
   },
   AuthMutation: {
-    createNewUser: async (parent, { input }) => {
-      return await createUser(input);
+    createNewUser: async (parent, { input }, { user }) => {
+      return await createUser(input, user);
+    },
+    loginUser: async (parent, { input }) => {
+      return await userLogin(input);
     },
   },
   AuthQuery: {

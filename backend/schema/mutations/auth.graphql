@@ -12,7 +12,13 @@ input RegisterOrgInput {
   password: String!
 }
 
+input UserLoginInput {
+  email: String!
+  password: String!
+}
+
 type AuthMutation {
   createNewUser(input: CreateUserInput): User!
   registerOrganization(input: RegisterOrgInput!): Organization
+  loginUser(input: UserLoginInput!): String!
 }
