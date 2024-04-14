@@ -1,5 +1,3 @@
-# jira-clone
+# story-scape
 
 # git done
-
-#testing 1

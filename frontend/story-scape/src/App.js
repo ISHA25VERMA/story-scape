@@ -12,6 +12,8 @@ import {
 import { onError } from "@apollo/client/link/error";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import routes from "./routes";
+import { AuthProvider } from "./authContext";
+import { Component } from "react";
 
 const errorLink = onError(({ graphqlErrors, networkErrors }) => {
   if (graphqlErrors) {
@@ -37,9 +39,11 @@ const router = createBrowserRouter(routes);
 
 function App() {
   return (
-    <ApolloProvider client={client}>
-      <RouterProvider router={router} />
-    </ApolloProvider>
+    <AuthProvider>
+      <ApolloProvider client={client}>
+        <RouterProvider router={router} />
+      </ApolloProvider>
+    </AuthProvider>
   );
 }
 

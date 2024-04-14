@@ -1,17 +1,40 @@
-import { React, useState, useEffect } from "react";
+import { React, useState, useEffect, useContext } from "react";
+import { AuthContext } from "../authContext";
 import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { useMutation } from "@apollo/client";
+import { REGISTER_USER } from "../Graphql/mutation/auth";
+
 function Register() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
-  const [orgId, setOrgId] = useState("");
-  const [role, setRole] = useState("");
+  const [password, setPassword] = useState("");
   const [success, setSuccess] = useState(false);
+  const context = useContext(AuthContext);
+
+  let navigate = useNavigate();
+
+  const [registerUser, { data, loading, error }] = useMutation(REGISTER_USER, {
+    update(
+      proxy,
+      {
+        data: {
+          auth: { createNewUser: userData },
+        },
+      }
+    ) {
+      while (loading) {
+        console.log("loading...");
+      }
+      context.login(userData);
+      navigate("/");
+    },
+    variables: { input: { name, email, password } },
+  });
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("here");
-    console.log(name);
-    setSuccess(true);
+    registerUser();
   };
   return (
     <div>
@@ -34,21 +57,13 @@ function Register() {
               onChange={(e) => setEmail(e.target.value)}
               required
             ></input>
-            <label htmlFor="orgId">Org Id: </label>
+            <label htmlFor="email">Password: </label>
             <input
               type="text"
-              id="orgId"
-              onChange={(e) => setOrgId(e.target.value)}
+              id="password"
+              onChange={(e) => setPassword(e.target.value)}
               required
             ></input>
-            <label htmlFor="role">Role: </label>
-            <select id="role" onChange={(e) => setRole(e.target.value)}>
-              <optgroup label="choose role">
-                <option>ADMIN</option>
-                <option>DEVELOPER</option>
-                <option>USER</option>
-              </optgroup>
-            </select>
             <div>
               <button>Register</button>
               <Link to={"/"}>Login Instead?</Link>

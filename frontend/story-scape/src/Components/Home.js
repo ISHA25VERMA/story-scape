@@ -1,16 +1,33 @@
-import { React, useState, useEffect } from "react";
-import { useQuery, gql } from "@apollo/client";
-import { LOAD_USERS } from "../Graphql/query/auth";
+import { React, useEffect, useContext } from "react";
+import { AuthContext } from "../authContext";
+import { Link, useNavigate } from "react-router-dom";
 
 function Home() {
-  const { error, loading, data } = useQuery(LOAD_USERS);
+  const { user, logout } = useContext(AuthContext);
+  let navigate = useNavigate();
 
   useEffect(() => {
-    console.log(data);
-  }, [data]);
+    if (!user) {
+      navigate("/login");
+    }
+  }, []);
+
+  console.log(user);
+
+  const loggedOut = () => {
+    logout();
+  };
+
+  if (!user) {
+    return <></>;
+  }
+
   return (
     <div>
-      <div class="topNavigation">HOme</div>
+      <div className="topNavigation">Home </div>
+      <Link to={"/login"} onClick={loggedOut}>
+        Logout
+      </Link>
     </div>
   );
 }

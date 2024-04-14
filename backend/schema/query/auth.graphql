@@ -12,6 +12,13 @@ type User {
   organization: Organization
 }
 
+type AuthenticationResult {
+  id: ID!
+  name: String!
+  email: String!
+  token: String!
+}
+
 type AuthQuery {
   user(ids: [ID!]!): User!
 }

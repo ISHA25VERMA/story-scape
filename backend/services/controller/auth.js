@@ -8,7 +8,10 @@ export const fetchUserById = async (data) => {
 };
 
 export const createUser = async (data, user) => {
-  return _.last(await addNewUser(data));
+  await addNewUser(data);
+  const loginData = await userLogin(data);
+
+  return loginData;
 };
 
 export const userLogin = async (data) => {
@@ -23,7 +26,11 @@ export const userLogin = async (data) => {
     { id: user.id, email: email, org_id: user.org_id },
     JWT_SECRET
   );
-  return jwtToken;
+
+  return {
+    ...user,
+    token: jwtToken,
+  };
 };
 
 export const jwtToken = (token) => {
