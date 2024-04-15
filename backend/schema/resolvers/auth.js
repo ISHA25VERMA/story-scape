@@ -27,7 +27,6 @@ export default {
   AuthQuery: {
     user: async (parent, input) => {
       const res = await fetchUserById(input);
-      console.log(res);
       return res;
     },
   },
