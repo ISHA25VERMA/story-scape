@@ -1,3 +1,4 @@
 type Mutation {
   auth: AuthMutation!
+  platform: PlatformMutation!
 }

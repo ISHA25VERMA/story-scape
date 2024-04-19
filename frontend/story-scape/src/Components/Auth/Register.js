@@ -1,9 +1,9 @@
 import { React, useState, useEffect, useContext } from "react";
-import { AuthContext } from "../authContext";
+import { AuthContext } from "../../authContext";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { useMutation } from "@apollo/client";
-import { REGISTER_USER } from "../Graphql/mutation/auth";
+import { REGISTER_USER } from "../../Graphql/mutation/auth";
 
 function Register() {
   const [name, setName] = useState("");

@@ -3,18 +3,14 @@
  * @returns { Promise<void> }
  */
 export const up = function (knex) {
-  const q = knex.schema.createTable("platform.story", function (table) {
-    table.increments("id");
+  return knex.schema.createTable("platform.chapter", function (table) {
+    table.increments("id").notNullable();
     table.string("title", 255).notNullable();
-    table.string("cover_image_url", 255);
+    table.string("text", 255);
     table.timestamps("created_at");
     table.integer("created_by");
     table.boolean("is_deleted").defaultTo(false);
-    table.string("genre", 255);
-    table.string("state", 255);
   });
-  console.log(q.toString());
-  return q;
 };
 
 /**
@@ -22,5 +18,5 @@ export const up = function (knex) {
  * @returns { Promise<void> }
  */
 export const down = function (knex) {
-  return knex.schema.dropTable("platform.story");
+  return knex.schema.dropTable("platform.chapter");
 };

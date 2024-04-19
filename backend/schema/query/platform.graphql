@@ -1,0 +1,36 @@
+type StoryMutationResponse {
+  isSuccess: Boolean!
+  warning: String
+  data: Story
+}
+
+type ChapterMutationResponse {
+  isSuccess: Boolean!
+  warning: String
+  data: Chapter
+}
+
+type Story {
+  id: ID!
+  title: String!
+  coverImageUrl: String
+  state: StoryStateEnum
+  genre: String
+  createdBy: User
+}
+
+type Chapter {
+  id: ID!
+  title: String!
+  text: String
+  createdBy: User
+}
+
+enum StoryStateEnum {
+  PUBLISHED
+  DRAFT
+}
+
+type PlatformQuery {
+  stories(filters: StoryFilters): [Story!]
+}

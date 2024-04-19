@@ -5,12 +5,13 @@ import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 
 import { ThemeProvider, createTheme } from "@mui/material/styles";
+import { pink } from "@mui/material/colors";
 
 const darkTheme = createTheme({
   palette: {
     mode: "dark",
     text: {
-      primary: "pink",
+      primary: "#ffffff",
     },
   },
 });

@@ -1,0 +1,39 @@
+input CreateStoryInput {
+  title: String!
+  coverImageUrl: String
+  state: StoryStateEnum
+  genre: String
+}
+
+input UpdateStoryInput {
+  title: String!
+  coverImageUrl: String
+  state: StoryStateEnum
+  genre: String
+}
+
+input CreateChapterInput {
+  title: String!
+  text: String
+}
+
+input UpdateChapterInput {
+  title: String!
+  text: String
+}
+
+enum StoryStateEnum {
+  PUBLISHED
+  DRAFT
+}
+
+input StoryFilters {
+  createdBy: ID!
+}
+
+type PlatformMutation {
+  createStory(input: CreateStoryInput!): StoryMutationResponse!
+  updateStory(input: UpdateStoryInput!): StoryMutationResponse!
+  createChapter(input: CreateChapterInput!): ChapterMutationResponse!
+  updateChapter(input: UpdateChapterInput!): ChapterMutationResponse!
+}
