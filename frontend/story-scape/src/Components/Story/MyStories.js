@@ -38,7 +38,7 @@ function MyStories() {
             </Typography>
 
             <Button color="inherit">
-              <Link to="/createStory">
+              <Link to="/story">
                 <AddIcon />
                 Add New
               </Link>

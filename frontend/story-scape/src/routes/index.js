@@ -3,10 +3,9 @@ import Home from "../Components/Home";
 import Login from "../Components/Auth/Login";
 import Register from "../Components/Auth/Register";
 import MyStories from "../Components/Story/MyStories";
-import CreateStory from "../Components/Story/CreateStory";
 import authRoutes from "./routes/auth";
-
-console.log(authRoutes);
+import Story from "../Components/Story/Story";
+import { createStory } from "./loader";
 
 const routes = [
   {
@@ -22,8 +21,9 @@ const routes = [
     element: <Login />,
   },
   {
-    path: "/createStory",
-    element: <CreateStory />,
+    path: "/story",
+    element: <Story />,
+    loader: createStory,
   },
   {
     path: "/myStories",

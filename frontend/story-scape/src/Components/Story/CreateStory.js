@@ -1,34 +1,21 @@
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 import { Form, useNavigate } from "react-router-dom";
 import { Box, TextField } from "@mui/material";
 import { imageDB } from "../../Firebase/storage";
 import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
 import { Button } from "@mui/base";
 import { useMutation } from "@apollo/client";
-import { CREATE_STORY } from "../../Graphql/mutation/platform";
-import { AuthContext } from "../../authContext";
-// Required for side-effects
+import { UPDATE_STORY } from "../../Graphql/mutation/platform";
+import { client } from "../../App";
+import { STORY_BY_ID } from "../../Graphql/query/platform";
+import { getStoryById } from "../../Graphql/cacheResults";
 
-function CreateStory() {
-  const [url, setUrl] = useState("");
+function CreateStory(props) {
+  const { storyId, story } = props;
+
   const [input, setInput] = useState({});
-  const context = useContext(AuthContext);
-  let navigate = useNavigate();
-  const [createStory, { data }] = useMutation(CREATE_STORY, {
-    update(
-      proxy,
-      {
-        data: {
-          platform: {
-            createStory: { data: Story },
-          },
-        },
-      }
-    ) {
-      navigate("/addChapter");
-    },
-    variables: { input: { coverImageUrl: url, state: "DRAFT", ...input } },
-  });
+  //   const [story, setStory] = useState(props.story);
+  const [url, setUrl] = useState(story.coverImageUrl);
 
   const uploadImage = async (e) => {
     const fileItem = e.target.files[0];
@@ -56,68 +43,83 @@ function CreateStory() {
     );
   };
 
+  const [updateStory, { data }] = useMutation(UPDATE_STORY, {
+    update(
+      cache,
+      {
+        data: {
+          platform: {
+            updateStory: { data },
+          },
+        },
+      }
+    ) {},
+    refetchQueries: [{ query: STORY_BY_ID, variables: { storyId } }],
+    variables: { input: { ...input, id: storyId, coverImageUrl: url } },
+  });
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-    createStory();
+    console.log("save");
+    updateStory();
   };
 
   return (
-    <Box component="main">
-      <Form onSubmit={handleSubmit}>
-        <Box
-          sx={{
-            bgcolor: "background.default",
-            p: 3,
-            height: "100%",
-            display: "flex",
-          }}
-        >
-          <div>
-            {url === "" && (
-              <input
-                style={styles["upload-image"]}
-                name="coverImageUrl"
-                type="file"
-                alt="hello"
-                onChange={uploadImage}
-              ></input>
-            )}
-            {url !== "" && (
-              <img style={styles["upload-image"]} alt="cover" src={url}></img>
-            )}
-          </div>
-          <div>
-            <TextField
-              onChange={(e) => {
-                setInput({ ...input, title: e.target.value });
-              }}
-              fullWidth
-              placeholder="Story Title"
-              variant="standard"
-            />
-            <TextField
-              onChange={(e) => {
-                setInput({ ...input, genre: e.target.value });
-              }}
-              fullWidth
-              placeholder="Genre"
-              variant="standard"
-            />
-            <TextField
-              // onChange={(e) => {
-              //   setInput({ ...input, description: e.target.value });
-              // }}
-              fullWidth
-              placeholder="Description"
-              multiline
-              minRows={10}
-              variant="standard"
-            />
-            <Button type="submit"> Next </Button>
-          </div>
-        </Box>
-      </Form>
-    </Box>
+    <Form onSubmit={handleSubmit}>
+      <Box
+        sx={{
+          bgcolor: "background.default",
+          p: 3,
+          height: "100%",
+          display: "flex",
+        }}
+      >
+        <div>
+          {url === "" && (
+            <input
+              style={styles["upload-image"]}
+              name="coverImageUrl"
+              type="file"
+              alt="hello"
+              onChange={uploadImage}
+            ></input>
+          )}
+          {url !== "" && (
+            <img style={styles["upload-image"]} alt="cover" src={url}></img>
+          )}
+        </div>
+        <div>
+          <TextField
+            onChange={(e) => {
+              setInput({ ...input, title: e.target.value });
+            }}
+            fullWidth
+            defaultValue={story.title}
+            placeholder="Story Title"
+            variant="standard"
+          />
+          <TextField
+            onChange={(e) => {
+              setInput({ ...input, genre: e.target.value });
+            }}
+            fullWidth
+            placeholder="Genre"
+            variant="standard"
+          />
+          <TextField
+            // onChange={(e) => {
+            //   setInput({ ...input, description: e.target.value });
+            // }}
+            fullWidth
+            placeholder="Description"
+            multiline
+            minRows={10}
+            variant="standard"
+          />
+          <Button type="submit"> SAVE </Button>
+        </div>
+      </Box>
+    </Form>
   );
 }
 

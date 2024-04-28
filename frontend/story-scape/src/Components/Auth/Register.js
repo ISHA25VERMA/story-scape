@@ -23,9 +23,6 @@ function Register() {
         },
       }
     ) {
-      while (loading) {
-        console.log("loading...");
-      }
       context.login(userData);
       navigate("/");
     },

@@ -6,18 +6,21 @@ input CreateStoryInput {
 }
 
 input UpdateStoryInput {
-  title: String!
+  id: ID!
+  title: String
   coverImageUrl: String
   state: StoryStateEnum
   genre: String
 }
 
 input CreateChapterInput {
+  storyId: ID!
   title: String!
   text: String
 }
 
 input UpdateChapterInput {
+  id: ID!
   title: String!
   text: String
 }

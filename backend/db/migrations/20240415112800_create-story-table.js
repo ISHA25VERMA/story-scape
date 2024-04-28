@@ -13,7 +13,6 @@ export const up = function (knex) {
     table.string("genre", 255);
     table.string("state", 255);
   });
-  console.log(q.toString());
   return q;
 };
 

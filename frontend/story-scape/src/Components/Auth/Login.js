@@ -6,9 +6,8 @@ import { LOGIN_USER } from "../../Graphql/mutation/auth.js";
 function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const { context } = useContext(AuthContext);
+  const context = useContext(AuthContext);
   let navigate = useNavigate();
-  console.log(context);
   const [loginUser, { data, loading, error }] = useMutation(LOGIN_USER, {
     update(
       proxy,
@@ -18,9 +17,6 @@ function Login() {
         },
       }
     ) {
-      while (loading) {
-        console.log("loading...");
-      }
       context.login(userData);
       navigate("/");
     },
