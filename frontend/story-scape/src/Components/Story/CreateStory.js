@@ -10,7 +10,7 @@ import { STORY_BY_ID } from "../../Graphql/query/platform";
 import { client } from "../../App";
 
 function CreateStory(props) {
-  const { storyId, story } = props;
+  const { storyId, story, variables } = props;
 
   const [input, setInput] = useState({});
   const [url, setUrl] = useState(story.coverImageUrl);
@@ -45,24 +45,31 @@ function CreateStory(props) {
       cache,
       {
         data: {
-          platform: {
-            updateStory: {
-              data: { ...dd },
-            },
-          },
+          platform: { story: updatedStory },
         },
       }
     ) {
-      client.cache.modify({
-        id: cache.identify(story),
-        fields: {
-          title() {
-            return dd.title;
-          },
-        },
+      const {
+        platform: { story },
+      } = cache.readQuery({
+        query: STORY_BY_ID,
+        variables,
       });
+      cache.writeQuery({
+        query: STORY_BY_ID,
+        variables,
+        data: { platform: { story: { ...story, updatedStory } } },
+      });
+      // client.cache.modify({
+      //   id: cache.identify(story),
+      //   fields: {
+      //     title() {
+      //       return dd.title;
+      //     },
+      //   },
+      // });
     },
-    // refetchQueries: [{ query: STORY_BY_ID, variables: { storyId } }],
+    refetchQueries: [{ query: STORY_BY_ID, variables: { storyId } }],
     variables: { input: { ...input, id: storyId, coverImageUrl: url } },
   });
 

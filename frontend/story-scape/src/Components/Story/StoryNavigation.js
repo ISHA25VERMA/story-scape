@@ -21,7 +21,6 @@ const drawerWidth = 240;
 function StoryNavigation(props) {
   const { setSelectedTab, selected, storyId, story } = props;
   const chapters = story.chapters;
-  const storyTitle = story.title;
 
   const changeMainPage = (e) => {
     if (e.target.offsetParent.classList.contains("chapter")) {
@@ -103,14 +102,14 @@ function StoryNavigation(props) {
                 {" "}
                 <PeopleAltIcon sx={{ color: pink[500] }} />
               </ListItemIcon>
-              <ListItemText primary={storyTitle} />
+              <ListItemText primary={story.title} />
             </ListItemButton>
           </ListItem>
         </List>
         <Divider />
         <List>
-          {!_.isEmpty(chapters) &&
-            chapters.map((chapter, index) => (
+          {!_.isEmpty(story.chapters) &&
+            story.chapters.map((chapter, index) => (
               <ListItem
                 className={"chapter"}
                 id={chapter.id}

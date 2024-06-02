@@ -4,11 +4,9 @@ import { Box } from "@mui/material";
 import StoryNavigation from "./StoryNavigation";
 import CreateStory from "./CreateStory";
 import CreateChapter from "../Chapter/CreateChapter";
-import { getStoryById } from "../../Graphql/cacheResults";
-import NavigationBar from "../Drawer";
-import NavigationBarr from "./NavigationBarr";
 import { client } from "../../App";
 import { STORY_BY_ID } from "../../Graphql/query/platform";
+import { useQuery } from "@apollo/client";
 // Required for side-effects
 
 function Story() {
@@ -16,13 +14,20 @@ function Story() {
   const load = useLoaderData();
 
   const variables = { storyId: load.id };
-  const {
-    platform: { story },
-  } = client.readQuery({
-    query: STORY_BY_ID,
-    variables,
+  // const {
+  //   platform: { story },
+  // } = client.readQuery({
+  //   query: STORY_BY_ID,
+  //   variables,
+  // });
+  // console.log(story);
+
+  const { loading, error, data } = useQuery(STORY_BY_ID, {
+    variables: { storyId: load.id },
   });
-  console.log(story);
+
+  while (loading) return <div>loading</div>;
+  const story = data.platform.story;
 
   return (
     <Box component="main">
