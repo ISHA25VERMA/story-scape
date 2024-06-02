@@ -4,19 +4,16 @@ import { Box, TextField } from "@mui/material";
 import { imageDB } from "../../Firebase/storage";
 import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
 import { Button } from "@mui/base";
-import { useMutation } from "@apollo/client";
+import { gql, useMutation } from "@apollo/client";
 import { UPDATE_STORY } from "../../Graphql/mutation/platform";
-import { client } from "../../App";
 import { STORY_BY_ID } from "../../Graphql/query/platform";
-import { getStoryById } from "../../Graphql/cacheResults";
+import { client } from "../../App";
 
 function CreateStory(props) {
   const { storyId, story } = props;
 
   const [input, setInput] = useState({});
-  //   const [story, setStory] = useState(props.story);
   const [url, setUrl] = useState(story.coverImageUrl);
-
   const uploadImage = async (e) => {
     const fileItem = e.target.files[0];
     const filename = fileItem.name;
@@ -49,19 +46,29 @@ function CreateStory(props) {
       {
         data: {
           platform: {
-            updateStory: { data },
+            updateStory: {
+              data: { ...dd },
+            },
           },
         },
       }
-    ) {},
-    refetchQueries: [{ query: STORY_BY_ID, variables: { storyId } }],
+    ) {
+      client.cache.modify({
+        id: cache.identify(story),
+        fields: {
+          title() {
+            return dd.title;
+          },
+        },
+      });
+    },
+    // refetchQueries: [{ query: STORY_BY_ID, variables: { storyId } }],
     variables: { input: { ...input, id: storyId, coverImageUrl: url } },
   });
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("save");
-    updateStory();
+    updateStory("isha");
   };
 
   return (
@@ -117,6 +124,7 @@ function CreateStory(props) {
             variant="standard"
           />
           <Button type="submit"> SAVE </Button>
+          {/* <Button>ttt {story.title}</Button> */}
         </div>
       </Box>
     </Form>

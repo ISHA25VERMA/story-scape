@@ -1,27 +1,16 @@
-import React, { useContext, useState } from "react";
-import Box from "@mui/material/Box";
-import Drawer from "@mui/material/Drawer";
-import CssBaseline from "@mui/material/CssBaseline";
-import Toolbar from "@mui/material/Toolbar";
-import List from "@mui/material/List";
-import Divider from "@mui/material/Divider";
-import ListItem from "@mui/material/ListItem";
-import ListItemButton from "@mui/material/ListItemButton";
-import ListItemIcon from "@mui/material/ListItemIcon";
-import ListItemText from "@mui/material/ListItemText";
-import PeopleAltIcon from "@mui/icons-material/PeopleAlt";
-import { pink } from "@mui/material/colors";
-import _ from "lodash";
 import { useMutation } from "@apollo/client";
+import _ from "lodash";
+import React from "react";
 import { CREATE_CHAPTER, Chapter } from "../../Graphql/mutation/platform";
 import { STORY_BY_ID } from "../../Graphql/query/platform";
+import { List, ListItem, ListItemButton, ListItemText } from "@mui/material";
 
-const drawerWidth = 240;
-
-function StoryNavigation(props) {
+function NavigationBarr(props) {
   const { setSelectedTab, selected, storyId, story } = props;
   const chapters = story.chapters;
-  const storyTitle = story.title;
+  const title = story.title;
+  console.log(chapters);
+  console.log("c", story);
 
   const changeMainPage = (e) => {
     if (e.target.offsetParent.classList.contains("chapter")) {
@@ -63,9 +52,7 @@ function StoryNavigation(props) {
           },
         },
       });
-      setSelectedTab(chapter.id);
     },
-    // fetchPolicy: "cache-only",
     refetchQueries: [{ query: STORY_BY_ID, variables: { storyId } }],
     variables: {
       input: { storyId, title: "CHAPTER TITLE", text: "" },
@@ -75,39 +62,10 @@ function StoryNavigation(props) {
   const addChapter = () => {
     createChapter();
   };
-
   return (
-    <Box sx={{ display: "flex" }}>
-      <CssBaseline />
-      <Drawer
-        sx={{
-          width: drawerWidth,
-          flexShrink: 0,
-          "& .MuiDrawer-paper": {
-            width: drawerWidth,
-            boxSizing: "border-box",
-          },
-        }}
-        variant="permanent"
-      >
-        <Toolbar />
-        <Divider />
-        <List>
-          <ListItem disablePadding>
-            <ListItemButton
-              id="story-title"
-              onClick={changeMainPage}
-              selected={selected === "story-title"}
-            >
-              <ListItemIcon>
-                {" "}
-                <PeopleAltIcon sx={{ color: pink[500] }} />
-              </ListItemIcon>
-              <ListItemText primary={storyTitle} />
-            </ListItemButton>
-          </ListItem>
-        </List>
-        <Divider />
+    <div>
+      <div>{title}</div>
+      {!_.isEmpty(chapters) && (
         <List>
           {!_.isEmpty(chapters) &&
             chapters.map((chapter, index) => (
@@ -129,9 +87,10 @@ function StoryNavigation(props) {
             </ListItemButton>
           </ListItem>
         </List>
-      </Drawer>
-    </Box>
+      )}
+      <button onClick={addChapter}>ADD CHAPTER</button>
+    </div>
   );
 }
 
-export default StoryNavigation;
+export default NavigationBarr;

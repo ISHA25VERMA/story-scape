@@ -5,7 +5,7 @@ import React, { useState } from "react";
 import { Form } from "react-router-dom";
 import { UPDATE_CHAPTER, UPDATE_STORY } from "../../Graphql/mutation/platform";
 function CreateChapter(props) {
-  const { story, setStory, chapterId } = props;
+  const { story, chapterId } = props;
   const [input, setInput] = useState("");
   const chapterData = _.find(story.chapters, { id: chapterId });
   const [chapter, setChapter] = useState(chapterData);
@@ -30,6 +30,7 @@ function CreateChapter(props) {
     e.preventDefault();
     updateChapter();
   };
+
   return (
     <div>
       <Box component="main">

@@ -1,23 +1,29 @@
-import React, { useContext, useEffect, useState } from "react";
-import { Form, useNavigate, useLoaderData } from "react-router-dom";
-import { Box, TextField } from "@mui/material";
+import React, { useState } from "react";
+import { useLoaderData } from "react-router-dom";
+import { Box } from "@mui/material";
 import StoryNavigation from "./StoryNavigation";
 import CreateStory from "./CreateStory";
-import Chapter from "../Chapter";
 import CreateChapter from "../Chapter/CreateChapter";
-import { useMutation, useQuery } from "@apollo/client";
-import { STORY_BY_ID } from "../../Graphql/query/platform";
-import { client } from "../../App";
 import { getStoryById } from "../../Graphql/cacheResults";
+import NavigationBar from "../Drawer";
+import NavigationBarr from "./NavigationBarr";
+import { client } from "../../App";
+import { STORY_BY_ID } from "../../Graphql/query/platform";
 // Required for side-effects
 
 function Story() {
   const [selectedTab, setSelectedTab] = useState("story-title");
   const load = useLoaderData();
 
-  const [story, setStory] = useState(useLoaderData);
+  const variables = { storyId: load.id };
+  const {
+    platform: { story },
+  } = client.readQuery({
+    query: STORY_BY_ID,
+    variables,
+  });
+  console.log(story);
 
-  console.log("s", story);
   return (
     <Box component="main">
       <StoryNavigation
@@ -25,7 +31,6 @@ function Story() {
         setSelectedTab={setSelectedTab}
         story={story}
         storyId={load.id}
-        setStory={setStory}
       ></StoryNavigation>
       <Box
         position="fixed"
@@ -39,13 +44,14 @@ function Story() {
           <CreateStory
             story={story}
             storyId={load.id}
-            setStory={setStory}
+            variables={variables}
           ></CreateStory>
         ) : (
           <CreateChapter
             chapterId={selectedTab}
             story={story}
             storyId={load.id}
+            content={"content"}
           ></CreateChapter>
         )}
       </Box>
