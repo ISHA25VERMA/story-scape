@@ -9,9 +9,9 @@ import { pink } from "@mui/material/colors";
 
 const darkTheme = createTheme({
   palette: {
-    mode: "dark",
+    mode: "light",
     text: {
-      primary: "#ffffff",
+      primary: "#000000",
     },
   },
 });

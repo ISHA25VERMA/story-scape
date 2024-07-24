@@ -4,6 +4,7 @@ import {
   userLogin,
 } from "../../services/controller/auth.js";
 import GraphQLJSON from "graphql-type-json";
+import { fetchStoriesByUserIds } from "../../services/model/platform.js";
 
 export default {
   Query: {
@@ -36,5 +37,9 @@ export default {
     id: ({ id }) => id,
     role: ({ role }) => role,
     organization: ({ org_id }) => {},
+    stories: async ({ id }, input) => {
+      const res = await fetchStoriesByUserIds({ ids: [id], ...input });
+      return res;
+    },
   },
 };

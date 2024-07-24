@@ -130,6 +130,7 @@ function CreateStory(props) {
             minRows={10}
             variant="standard"
           />
+          "<Button type="submit">DO NOT SAVE</Button>
           <Button type="submit"> SAVE </Button>
           {/* <Button>ttt {story.title}</Button> */}
         </div>

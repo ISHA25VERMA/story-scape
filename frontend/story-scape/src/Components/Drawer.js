@@ -25,10 +25,14 @@ import { AuthContext } from "../authContext";
 const drawerWidth = 240;
 
 function NavigationBar(props) {
-  const { name, selected } = props;
+  const { name, selectedTab, setSelectedTab } = props;
   const { logout } = useContext(AuthContext);
   const loggedOut = () => {
     logout();
+  };
+
+  const changeMainPage = (e) => {
+    setSelectedTab(e.target.offsetParent.id);
   };
   return (
     <Box sx={{ display: "flex" }}>
@@ -57,8 +61,8 @@ function NavigationBar(props) {
         <Toolbar />
         <Divider />
         <List>
-          <ListItem disablePadding>
-            <ListItemButton selected={selected === "COMMUNITY"}>
+          <ListItem id={"COMMUNITY"} onClick={changeMainPage} disablePadding>
+            <ListItemButton selected={selectedTab === "COMMUNITY"}>
               <ListItemIcon>
                 {" "}
                 <PeopleAltIcon sx={{ color: pink[500] }} />
@@ -66,8 +70,8 @@ function NavigationBar(props) {
               <ListItemText primary={"Community"} />
             </ListItemButton>
           </ListItem>
-          <ListItem disablePadding>
-            <ListItemButton selected={selected === "POPULAR"}>
+          <ListItem id={"POPULAR"} onClick={changeMainPage} disablePadding>
+            <ListItemButton selected={selectedTab === "POPULAR"}>
               <ListItemIcon>
                 {" "}
                 <TrendingUpIcon sx={{ color: pink[500] }} />
@@ -75,8 +79,8 @@ function NavigationBar(props) {
               <ListItemText primary={"Popular"} />
             </ListItemButton>
           </ListItem>
-          <ListItem disablePadding>
-            <ListItemButton selected={selected === "MY_LIBRARY"}>
+          <ListItem id={"MY_LIBRARY"} onClick={changeMainPage} disablePadding>
+            <ListItemButton selected={selectedTab === "MY_LIBRARY"}>
               <ListItemIcon>
                 {" "}
                 <AutoStoriesIcon sx={{ color: pink[500] }} />
@@ -85,19 +89,21 @@ function NavigationBar(props) {
             </ListItemButton>
           </ListItem>
 
-          <ListItem disablePadding>
-            <ListItemButton selected={selected === "MY_STORIES"}>
+          <ListItem id={"MY_STORIES"} onClick={changeMainPage} disablePadding>
+            <ListItemButton selected={selectedTab === "MY_STORIES"}>
               <ListItemIcon>
                 {" "}
                 <CreateIcon sx={{ color: pink[500] }} />
               </ListItemIcon>
-              <Link color="primary" to={"/myStories"}>
-                <ListItemText primary={"My Stories"} />
-              </Link>
+              <ListItemText primary={"My Stories"} />
             </ListItemButton>
           </ListItem>
-          <ListItem disablePadding>
-            <ListItemButton selected={selected === "WRITING_CONTEST"}>
+          <ListItem
+            id={"WRITING_CONTEST"}
+            onClick={changeMainPage}
+            disablePadding
+          >
+            <ListItemButton selected={selectedTab === "WRITING_CONTEST"}>
               <ListItemIcon>
                 {" "}
                 <EmojiEventsIcon sx={{ color: pink[500] }} />
@@ -108,8 +114,8 @@ function NavigationBar(props) {
         </List>
         <Divider />
         <List>
-          <ListItem disablePadding>
-            <ListItemButton selected={selected === "SETTING"}>
+          <ListItem id={"SETTING"} onClick={changeMainPage} disablePadding>
+            <ListItemButton selected={selectedTab === "SETTING"}>
               <ListItemIcon>
                 {" "}
                 <SettingsIcon sx={{ color: pink[500] }} />
@@ -117,7 +123,7 @@ function NavigationBar(props) {
               <ListItemText primary={"Setting"} />
             </ListItemButton>
           </ListItem>
-          <ListItem disablePadding>
+          <ListItem onClick={changeMainPage} disablePadding>
             <ListItemButton>
               <ListItemIcon>
                 {" "}

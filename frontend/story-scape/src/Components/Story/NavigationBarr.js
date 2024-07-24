@@ -9,6 +9,7 @@ function NavigationBarr(props) {
   const { setSelectedTab, selected, storyId, story } = props;
   const chapters = story.chapters;
   const title = story.title;
+  const coverImg = story.coverImageUrl ? story.coverImageUrl : "";
   console.log(chapters);
   console.log("c", story);
 

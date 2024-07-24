@@ -17,8 +17,11 @@ function Chapter() {
         />
 
         <TextField
+          placeholder="Title"
+          id="outlined-multiline-static"
+          label="Multiline"
           multiline
-          variant="standard"
+          rows={4}
           value={text}
           onChange={(event) => {
             setText(event.target.value);

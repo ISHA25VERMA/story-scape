@@ -2,7 +2,7 @@ import { Children } from "react";
 import Home from "../Components/Home";
 import Login from "../Components/Auth/Login";
 import Register from "../Components/Auth/Register";
-import MyStories from "../Components/Story/MyStories";
+import MyStories from "../Components/Dashboards/MyStories";
 import authRoutes from "./routes/auth";
 import Story from "../Components/Story/Story";
 import { createStory } from "./loader";

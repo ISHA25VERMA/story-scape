@@ -32,8 +32,18 @@ function CreateChapter(props) {
   };
 
   return (
-    <div>
-      <Box component="main">
+    <div
+      style={{
+        position: "fixed",
+        width: "100%",
+        overflow: "scroll",
+        height: "650px",
+        "overflow-y": "scroll",
+        "overflow-x": "hidden",
+        padding: "20px 20px",
+      }}
+    >
+      <div component="main">
         <Form onSubmit={updateChapterDetails}>
           <TextField
             onChange={(e) => {
@@ -49,15 +59,15 @@ function CreateChapter(props) {
               setInput({ ...input, text: e.target.value });
             }}
             fullWidth
-            placeholder="Description"
+            placeholder="Text"
             multiline
-            minRows={10}
+            minRows={25}
             variant="standard"
             defaultValue={chapter.text}
           />
           <Button type="submit">SAVE</Button>
         </Form>
-      </Box>
+      </div>
     </div>
   );
 }

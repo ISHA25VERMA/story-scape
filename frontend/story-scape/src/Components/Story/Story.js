@@ -4,7 +4,6 @@ import { Box } from "@mui/material";
 import StoryNavigation from "./StoryNavigation";
 import CreateStory from "./CreateStory";
 import CreateChapter from "../Chapter/CreateChapter";
-import { client } from "../../App";
 import { STORY_BY_ID } from "../../Graphql/query/platform";
 import { useQuery } from "@apollo/client";
 // Required for side-effects
@@ -20,8 +19,6 @@ function Story() {
   //   query: STORY_BY_ID,
   //   variables,
   // });
-  // console.log(story);
-
   const { loading, error, data } = useQuery(STORY_BY_ID, {
     variables: { storyId: load.id },
   });

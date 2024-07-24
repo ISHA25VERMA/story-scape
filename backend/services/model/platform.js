@@ -57,3 +57,13 @@ export const updateChapter = async (data) => {
     .returning("*");
   return res[0];
 };
+
+export const fetchStoriesByUserIds = async (data) => {
+  const { ids, StoryFilters } = data;
+  const query = db("platform.story").select("*").whereIn("created_by", ids);
+
+  if (_.get(StoryFilters, "state", "") != "") {
+    query.where("state", StoryFilters.state);
+  }
+  return await query;
+};
