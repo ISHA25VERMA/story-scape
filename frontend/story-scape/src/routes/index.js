@@ -26,6 +26,13 @@ const routes = [
     loader: createStory,
   },
   {
+    path: "/story/:storyId",
+    element: <Story />,
+    loader: ({ params }) => {
+      return createStory(params);
+    },
+  },
+  {
     path: "/myStories",
     element: <MyStories />,
   },

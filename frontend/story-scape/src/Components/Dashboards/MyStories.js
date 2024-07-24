@@ -13,7 +13,7 @@ function MyStories() {
   //use query fetch for frtching user stories
   const { user } = useContext(AuthContext);
 
-  const [storyState, setStoryState] = useState("PUBLISHED");
+  const [storyState, setStoryState] = useState("DRAFT");
   const { loading, error, data } = useQuery(STORY_BY_USER_IDS, {
     variables: {
       ids: user.id,
@@ -103,24 +103,21 @@ function MyStories() {
           </div>
           <div
             style={{
-              display: "grid",
-              gap: "8px",
+              display: "flex",
+              gap: "20px",
               // "grid-template-columns": "repeat(auto-fit, minmax(20px, 1fr))",
-              "grid-template-columns": "repeat(auto-fit,minmax(200px, 1fr))",
+              // "grid-template-columns": "repeat(auto-fit,minmax(200px, 1fr))",
               // "grid-auto-rows": "minmax(100px, auto)",
               // "grid-auto-rows": "100px",
 
+              flexFlow: "wrap",
               paddingTop: "20px",
             }}
           >
             {stories.map((element) => {
               console.log(element);
-              return <StoryTile></StoryTile>;
+              return <StoryTile story={element}></StoryTile>;
             })}
-            <StoryTile></StoryTile>
-            <StoryTile></StoryTile>
-            {/* <StoryTile></StoryTile>
-            <StoryTile></StoryTile> */}
           </div>
         </Box>
       </Box>
